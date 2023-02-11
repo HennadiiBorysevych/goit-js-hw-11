@@ -10,7 +10,7 @@ export default function handleGalleryCreation(data) {
       downloads,
     } = item;
     str += `<div class="photo-card">
-  <img class="img" src="${webformatURL}" alt="${tags}" loading="lazy" />
+  <a href="${largeImageURL}" ><img class="img" src="${webformatURL}" alt="${tags}" loading="lazy" /></a>
   <div class="info">
     <p class="info-item">
       <b>Likes</b>
