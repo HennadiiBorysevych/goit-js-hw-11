@@ -9,8 +9,9 @@ export default function handleGalleryCreation(data) {
       comments,
       downloads,
     } = item;
-    str += `<div class="photo-card">
-  <a href="${largeImageURL}" ><img class="img" src="${webformatURL}" alt="${tags}" loading="lazy" /></a>
+    str += `<a class="gallery__link" href="${largeImageURL}" >
+    <div class="photo-card">
+    <img class="img" src="${webformatURL}" alt="${tags}" loading="lazy" />
   <div class="info">
     <p class="info-item">
       <b>Likes</b>
@@ -29,7 +30,7 @@ export default function handleGalleryCreation(data) {
       ${downloads}
     </p>
   </div>
-</div>`;
+</div></a>`;
     return str;
   }, '');
 }

@@ -1,21 +1,43 @@
+const axios = require('axios').default;
+import { Loading } from 'notiflix/build/notiflix-loading-aio';
+import { Report } from 'notiflix/build/notiflix-report-aio';
+
 export default class FetchInfo {
   constructor() {
     this.searchQuery = '';
     this.page = 1;
+    this.perPage = 40;
   }
 
   async fetchInfo() {
-    const API =
-      'https://pixabay.com/api/?key=33559977-5d8a81e40738ffd9c726fd9c1';
+    const URL = 'https://pixabay.com/api/';
+    const KEY = '33559977-5d8a81e40738ffd9c726fd9c1';
+    const searchParams = new URLSearchParams({
+      key: KEY,
+      q: this.searchQuery,
+      image_type: 'photo',
+      orientation: 'horizontal',
+      safesearch: true,
+      per_page: this.perPage,
+      page: this.page,
+    });
 
-    const response = await fetch(
-      `${API}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${this.page}`
-    );
-
-    const data = await response.json();
-    this.page += 1;
-    return data;
+    Loading.circle();
+    try {
+      const response = await axios.get(URL, { params: searchParams });
+      Loading.remove();
+      this.page += 1;
+      return response.data;
+    } catch {
+      Report.info('The request was not processed');
+      Loading.remove();
+    }
   }
+
+  numberOfResponses() {
+    return this.perPage;
+  }
+
   resetSearch() {
     this.page = 1;
   }
@@ -24,5 +46,8 @@ export default class FetchInfo {
   }
   set query(newQuery) {
     this.searchQuery = newQuery;
+  }
+  currentPage() {
+    return this.page - 1;
   }
 }
