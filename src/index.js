@@ -91,3 +91,23 @@ function scroll() {
     behavior: 'smooth',
   });
 }
+
+window.addEventListener('scroll', () => {
+  const documentRect = document.documentElement.getBoundingClientRect();
+  console.dir(documentRect);
+
+  if (documentRect.bottom < document.documentElement.clientHeight + 150) {
+    newFetchInfo
+      .fetchInfo()
+      .then(res => {
+        onScrollCreation(res);
+        lightbox.refresh();
+      })
+      .catch(er => console.log(er));
+  }
+});
+
+function onScrollCreation(data) {
+  gallery.insertAdjacentHTML('beforeend', handleGalleryCreation(data));
+  lightbox.refresh();
+}

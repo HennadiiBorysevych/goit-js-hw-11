@@ -6,7 +6,7 @@ export default class FetchInfo {
   constructor() {
     this.searchQuery = '';
     this.page = 1;
-    this.perPage = 40;
+    this.perPage = 20;
   }
 
   async fetchInfo() {
